@@ -15,8 +15,8 @@ export default function Preloader() {
       <div className="relative z-10 flex flex-col items-center gap-8">
         {/* Logo/Text */}
         <div className="preloader-text text-center">
-          <h1 className="text-5xl md:text-6xl font-bold glow-cyan mb-2">MAJD</h1>
-          <p className="text-sm md:text-base text-muted-foreground tracking-widest">AI ENGINEER • GENERATIVE AI</p>
+          <h1 className="text-5xl md:text-6xl font-bold glow-cyan mb-2">MAJD Zarai</h1>
+          <p className="text-sm md:text-base text-muted-foreground tracking-widest">AI ENGINEER • Data Scientist</p>
         </div>
 
         {/* Progress Bar */}

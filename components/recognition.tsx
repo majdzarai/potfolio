@@ -1,0 +1,416 @@
+"use client"
+
+import { motion, AnimatePresence } from "framer-motion"
+import { useState, useEffect } from "react"
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
+import { Button } from "@/components/ui/button"
+
+interface Recognition {
+  title: string
+  description: string
+  year: string
+  icon: string
+  iconBg: string
+  project?: string
+  organization: string
+  type: string
+  images?: string[]
+}
+
+const recognitions: Recognition[] = [
+  {
+    title: "2nd Place – IndabaX Tunisia 2025 Hackathon",
+    description: "Anomaly Detection challenge among 69 teams, 10,500 TND prize",
+    year: "2025",
+    icon: "/images/anomaly.jpg",
+    iconBg: "#8b5cf6",
+    project: "Anomaly Detection System",
+    organization: "IndabaX Tunisia",
+    type: "Hackathon",
+    images: [
+      "/images/first.jpg",
+      "/images/zindi.jpg",
+      "/images/ai.jpg",
+      "/images/sup.jpg",
+      "/images/2.jpg",
+      "/images/1.jpg",
+      "/images/hak.mp4",
+      "/images/hak2.mp4",
+      "/images/hak3.jpg",
+      "/images/hak4.jpg",
+      "/images/hak5.jpg",
+      "/images/hak6.jpg",
+      "/images/hak7.mp4",
+      
+
+      
+    ],
+  },
+  {
+    title: "Best Project of the Year – ESPRIT University 2025",
+    description: "Selected from 200+ competing projects for Vigilant X platform",
+    year: "2025",
+    icon: "/images/yottanest.png",
+    iconBg: "#3b82f6",
+    project: "Vigilant X",
+    organization: "ESPRIT University",
+    type: "Award",
+    images: [
+      "/images/ball.jpg",
+      "/images/ball1.jpg",
+    "/images/ball2.jpg",
+    "/images/ball3.mp4",
+    "/images/ball4.mp4",
+    "/images/vigilantx.mp4",
+    "/images/value8.jpg",
+    
+    
+    ],
+  },
+  {
+    title: "Chosen Top Project for Value Incubator",
+    description: "Selected as the top project by Value Incubator for innovation, technical rigor, and impact",
+    year: "2025",
+    icon: "/images/yottanest.png",
+    iconBg: "#06b6d4",
+    project: "Vigilant X",
+    organization: "Value Incubator",
+    type: "Award",
+    images: [
+      "/images/value1.jpg",
+      "/images/value2.jpg",
+      "/images/value3.mp4",
+      "/images/value5.jpg",
+      "/images/value6.jpg",
+      "/images/value7.jpg",
+      "/images/value12.jpg",
+      "/images/vl.jpg",
+      
+     
+    ],
+  },
+]
+
+// Helper function to check if media is a video
+const isVideo = (url: string): boolean => {
+  const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.mkv']
+  return videoExtensions.some(ext => url.toLowerCase().includes(ext))
+}
+
+const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
+  index,
+  title,
+  description,
+  year,
+  icon,
+  iconBg,
+  project,
+  organization,
+  type,
+  images = [],
+}) => {
+  const [isOpen, setIsOpen] = useState(false)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+
+  // Keyboard navigation
+  useEffect(() => {
+    if (!isOpen) return
+
+    const handleKeyPress = (e: KeyboardEvent) => {
+      if (e.key === 'ArrowLeft') {
+        handlePrev()
+      } else if (e.key === 'ArrowRight') {
+        handleNext()
+      } else if (e.key === 'Escape') {
+        setIsOpen(false)
+      }
+    }
+
+    window.addEventListener('keydown', handleKeyPress)
+    return () => window.removeEventListener('keydown', handleKeyPress)
+  }, [isOpen, currentImageIndex, images.length])
+
+  const handleNext = () => {
+    setCurrentImageIndex((prev) => (prev + 1) % images.length)
+  }
+
+  const handlePrev = () => {
+    setCurrentImageIndex((prev) => (prev - 1 + images.length) % images.length)
+  }
+
+  const currentMedia = images[currentImageIndex]
+  const isCurrentVideo = currentMedia ? isVideo(currentMedia) : false
+
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, amount: 0.25 }}
+        transition={{
+          type: "spring",
+          delay: index * 0.2,
+          duration: 0.75,
+        }}
+        onClick={() => {
+          if (images.length > 0) {
+            setIsOpen(true)
+            setCurrentImageIndex(0)
+          }
+        }}
+        className={`bg-card/80 backdrop-blur-md border border-border/50 rounded-3xl p-8 sm:p-10 hover:border-primary/50 hover:glow-box transition-all duration-300 flex-shrink-0 w-[320px] sm:w-[380px] lg:w-[400px] ${images.length > 0 ? 'cursor-pointer' : ''}`}
+      >
+        {/* Quote Icon */}
+        <p className="text-[48px] font-black text-primary/30 mb-2">"</p>
+
+        <div className="mt-1">
+          {/* Title */}
+          <h3 className="text-[18px] sm:text-[20px] font-bold text-foreground mb-3 leading-tight">
+            {title}
+          </h3>
+
+          {/* Description */}
+          <p className="text-[14px] sm:text-[16px] tracking-wider text-muted-foreground leading-relaxed mb-6">
+            {description}
+          </p>
+
+          {/* Bottom Section with Image and Info */}
+          <div className="mt-7 flex items-center justify-between gap-3">
+            <div className="flex flex-1 flex-col">
+              <p className="text-[14px] sm:text-[16px] font-medium text-foreground">
+                <span className="text-primary">@</span> {organization}
+              </p>
+              <p className="text-muted-foreground mt-1 text-[12px] sm:text-[14px]">
+                {type} of {year}
+              </p>
+            </div>
+
+            {/* Circular Image */}
+            <div
+              className="h-12 w-12 sm:h-14 sm:w-14 rounded-full overflow-hidden border-2 border-primary/30 flex-shrink-0"
+              style={{
+                boxShadow: `0 4px 20px ${iconBg}40`,
+              }}
+            >
+              <img
+                src={icon}
+                alt={title}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </div>
+
+          {/* Click hint if images available */}
+          {images.length > 0 && (
+            <div className="mt-4 pt-4 border-t border-border/30 flex items-center justify-center gap-2 text-xs text-primary/70">
+              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+              </svg>
+              Click to view gallery ({images.length})
+            </div>
+          )}
+        </div>
+      </motion.div>
+
+      {/* Enhanced Image/Video Gallery Modal */}
+      <Dialog open={isOpen} onOpenChange={setIsOpen}>
+        <DialogContent className="max-w-[95vw] sm:max-w-6xl max-h-[95vh] overflow-hidden bg-background/98 backdrop-blur-xl border-primary/20 p-0 gap-0">
+          <DialogHeader className="px-4 sm:px-6 pt-4 sm:pt-6 pb-2">
+            <DialogTitle className="text-xl sm:text-2xl lg:text-3xl font-bold text-center">
+              {title}
+            </DialogTitle>
+            <p className="text-center text-muted-foreground text-xs sm:text-sm mt-1">
+              {organization} • {year}
+            </p>
+          </DialogHeader>
+
+          {images.length > 0 && (
+            <div className="relative flex-1 overflow-hidden">
+              {/* Main Media Display */}
+              <div className="relative w-full h-[50vh] sm:h-[60vh] lg:h-[70vh] bg-gradient-to-br from-card/50 to-card/30 flex items-center justify-center overflow-hidden">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={currentImageIndex}
+                    initial={{ opacity: 0, scale: 0.95, x: 20 }}
+                    animate={{ opacity: 1, scale: 1, x: 0 }}
+                    exit={{ opacity: 0, scale: 0.95, x: -20 }}
+                    transition={{ duration: 0.3, ease: "easeInOut" }}
+                    className="w-full h-full flex items-center justify-center p-4"
+                  >
+                    {isCurrentVideo ? (
+                      <video
+                        src={currentMedia}
+                        controls
+                        autoPlay
+                        className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                        playsInline
+                      >
+                        Your browser does not support the video tag.
+                      </video>
+                    ) : (
+                      <img
+                        src={currentMedia}
+                        alt={`${title} - Media ${currentImageIndex + 1}`}
+                        className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                        loading="lazy"
+                      />
+                    )}
+                  </motion.div>
+                </AnimatePresence>
+
+                {/* Navigation Arrows */}
+                {images.length > 1 && (
+                  <>
+                    <Button
+                      onClick={handlePrev}
+                      variant="ghost"
+                      size="icon"
+                      className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background border border-primary/40 hover:border-primary rounded-full w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 backdrop-blur-sm transition-all duration-200 hover:scale-110 z-10"
+                    >
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                      </svg>
+                    </Button>
+                    <Button
+                      onClick={handleNext}
+                      variant="ghost"
+                      size="icon"
+                      className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-background/90 hover:bg-background border border-primary/40 hover:border-primary rounded-full w-10 h-10 sm:w-12 sm:h-12 lg:w-14 lg:h-14 backdrop-blur-sm transition-all duration-200 hover:scale-110 z-10"
+                    >
+                      <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                      </svg>
+                    </Button>
+                  </>
+                )}
+
+                {/* Media Counter */}
+                <div className="absolute bottom-2 sm:bottom-4 left-1/2 -translate-x-1/2 bg-background/90 backdrop-blur-sm px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-primary/30 text-xs sm:text-sm font-medium shadow-lg">
+                  {currentImageIndex + 1} / {images.length}
+                </div>
+
+                {/* Media Type Badge */}
+                <div className="absolute top-2 sm:top-4 right-2 sm:right-4 bg-background/90 backdrop-blur-sm px-2 sm:px-3 py-1 rounded-full border border-primary/30 text-xs flex items-center gap-1.5">
+                  {isCurrentVideo ? (
+                    <>
+                      <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path d="M8 5v14l11-7z"/>
+                      </svg>
+                      <span>Video</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                      </svg>
+                      <span>Image</span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Thumbnail Strip */}
+              {images.length > 1 && (
+                <div className="px-4 sm:px-6 py-3 sm:py-4 bg-card/30 border-t border-border/30">
+                  <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                    {images.map((media, idx) => {
+                      const isVideoMedia = isVideo(media)
+                      return (
+                        <button
+                          key={idx}
+                          onClick={() => setCurrentImageIndex(idx)}
+                          className={`flex-shrink-0 relative rounded-lg overflow-hidden border-2 transition-all duration-200 ${
+                            currentImageIndex === idx
+                              ? "border-primary scale-105 shadow-lg shadow-primary/50"
+                              : "border-border/50 hover:border-primary/50 opacity-70 hover:opacity-100"
+                          }`}
+                          style={{
+                            width: '80px',
+                            height: '80px',
+                          }}
+                        >
+                          {isVideoMedia ? (
+                            <>
+                              <video
+                                src={media}
+                                className="w-full h-full object-cover"
+                                muted
+                                playsInline
+                              />
+                              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                  <path d="M8 5v14l11-7z"/>
+                                </svg>
+                              </div>
+                            </>
+                          ) : (
+                            <img
+                              src={media}
+                              alt={`Thumbnail ${idx + 1}`}
+                              className="w-full h-full object-cover"
+                              loading="lazy"
+                            />
+                          )}
+                          {currentImageIndex === idx && (
+                            <div className="absolute inset-0 bg-primary/20 border-2 border-primary" />
+                          )}
+                        </button>
+                      )
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {/* Navigation Hint */}
+              <div className="px-4 sm:px-6 pb-4 sm:pb-6 pt-2">
+                <p className="text-center text-xs sm:text-sm text-muted-foreground">
+                  Use arrow keys, click thumbnails, or swipe to navigate
+                </p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+    </>
+  )
+}
+
+const Recognition = () => {
+  return (
+    <section className="relative py-20 px-4 sm:px-6 lg:px-8" id="recognition">
+      <div className="max-w-7xl mx-auto">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+          className="text-center mb-12"
+        >
+          <p className="text-primary text-sm sm:text-base font-medium tracking-widest uppercase mb-2">
+            ACHIEVEMENTS & AWARDS
+          </p>
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold glow-text">
+            Recognition.
+          </h2>
+        </motion.div>
+
+        {/* Horizontal Scrollable Cards */}
+        <div className="overflow-x-auto pb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
+          <div className="flex gap-6 sm:gap-8 min-w-max">
+            {recognitions.map((recognition, index) => (
+              <RecognitionCard key={index} index={index} {...recognition} />
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+export default Recognition

@@ -2,9 +2,12 @@
 
 import { useEffect, useRef } from "react"
 import Navigation from "@/components/navigation"
+import ScrollToTop from "@/components/scroll-to-top"
 import Hero from "@/components/hero"
 import About from "@/components/about"
 import Projects from "@/components/projects"
+import Recognition from "@/components/recognition"
+import Experience from "@/components/experience"
 import Contact from "@/components/contact"
 import Footer from "@/components/footer"
 
@@ -81,10 +84,13 @@ export default function Home() {
 
       <div className="relative w-full bg-background overflow-hidden">
         <Navigation />
+        <ScrollToTop />
         <main ref={mainRef} className="relative opacity-0 transition-opacity duration-800">
           <Hero />
           <About />
           <Projects />
+          <Recognition />
+          <Experience />
           <Contact />
           <Footer />
         </main>

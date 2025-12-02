@@ -9,6 +9,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog"
+import Recognition from "./recognition"
 
 interface Project {
   id: number
@@ -21,6 +22,7 @@ interface Project {
   achievements?: string[]
   date: string
   videoUrl?: string
+  videoType?: "youtube" | "local"
 }
 
 const Projects = () => {
@@ -28,6 +30,8 @@ const Projects = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null)
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showAll, setShowAll] = useState(false)
+  const INITIAL_DISPLAY_COUNT = 4
 
   const projects: Project[] = [
     {
@@ -54,7 +58,8 @@ const Projects = () => {
         "Showcased at the Ball of Project – 12th Edition (2025)"
       ],
       date: "Jan 2025 - Jun 2025",
-      videoUrl: "https://www.youtube.com/embed/cQDnZIdzZVg"
+      videoUrl: "https://www.youtube.com/embed/cQDnZIdzZVg",
+      videoType: "youtube"
     },
     {
       id: 2,
@@ -86,7 +91,9 @@ const Projects = () => {
         "Visual overlays and annotations with cvzone",
         "Persistent parking spot positions with Pickle"
       ],
-      date: "Mar 2025"
+      date: "Mar 2025",
+      videoUrl: "/images/car detection.mp4",
+      videoType: "local"
     },
     {
       id: 4,
@@ -102,7 +109,9 @@ const Projects = () => {
         "Confidence scores and visual feedback",
         "Publicly accessible deployed model"
       ],
-      date: "Jan 2025 - Feb 2025"
+      date: "Jan 2025 - Feb 2025",
+      videoUrl: "/images/Churn Prediction.mp4",
+      videoType: "local"
     },
     {
       id: 5,
@@ -118,7 +127,9 @@ const Projects = () => {
         "Handwritten and graphical input interpretation",
         "Designed to enhance learning, curiosity, and creativity"
       ],
-      date: "Dec 2024"
+      date: "Dec 2024",
+      videoUrl: "/images/Math Platform.mp4",
+      videoType: "local"
     },
     {
       id: 6,
@@ -134,14 +145,16 @@ const Projects = () => {
         "Integrated payment system for premium plans",
         "Fast and scalable image generation"
       ],
-      date: "Nov 2024 - Dec 2024"
+      date: "Nov 2024 - Dec 2024",
+      videoUrl: "/images/GENME.mp4",
+      videoType: "local"
     },
     {
       id: 7,
       title: "RIVEZ – E-Learning Management System",
       shortDescription: "Modern LMS with real-time features and chatbot",
       fullDescription: "A modern E-learning Management System designed to enhance communication, course management, and user engagement for students, teachers, and administrators. The platform is built with Next.js and provides a seamless, interactive experience with real-time updates and integrated tools.",
-      image: "/images/project-7.png",
+      image: "/images/rivez elearning.jpg",
       tech: ["Next.js", "React", "Node.js", "MongoDB", "Socket.io"],
       highlights: [
         "Teachers: Create and manage classes, courses, and chapters",
@@ -150,14 +163,16 @@ const Projects = () => {
         "Students: Enroll in courses, add favorites, access chatbot",
         "Administrators: Manage users and oversee platform operations"
       ],
-      date: "Jul 2024 - Aug 2024"
+      date: "Jul 2024 - Aug 2024",
+      videoUrl: "/images/rivez.mp4",
+      videoType: "local"
     },
     {
       id: 8,
       title: "Sign Language Detection Model",
       shortDescription: "ML-based gesture recognition for accessibility",
       fullDescription: "A machine learning-based sign language detection model aimed at supporting communication for Deaf and Hard-of-Hearing communities. The system uses OpenCV for live video capture to build a custom dataset of hand gestures, and applies classification models to accurately interpret these gestures in real time. The project demonstrates how AI and computer vision can contribute to greater inclusivity and accessibility.",
-      image: "/images/project-8.png",
+      image: "/images/sign language.jpg",
       tech: ["Python", "OpenCV", "TensorFlow", "MediaPipe", "Scikit-learn"],
       highlights: [
         "Live data collection via webcam",
@@ -166,14 +181,143 @@ const Projects = () => {
         "Model training and refinement for reliability",
         "Supports Deaf and Hard-of-Hearing communities"
       ],
-      date: "Feb 2024 - Mar 2024"
+      date: "Feb 2024 - Mar 2024",
+      videoUrl: "/images/Sign Language.mp4",
+      videoType: "local"
+    },
+    {
+      id: 9,
+      title: "Face Detection System",
+      shortDescription: "Real-time face detection and recognition using computer vision",
+      fullDescription: "A real-time face detection system built with OpenCV and deep learning models. The system can detect and recognize faces in live video feeds, providing accurate identification and tracking capabilities. This project demonstrates advanced computer vision techniques for facial recognition applications.",
+      image: "/images/face detection.jpg",
+      tech: ["Python", "OpenCV", "Deep Learning", "Computer Vision", "MediaPipe"],
+      highlights: [
+        "Real-time face detection in live video streams",
+        "High accuracy facial recognition",
+        "Multiple face tracking capabilities",
+        "Optimized for performance and speed",
+        "Webcam and video file support"
+      ],
+      date: "2024",
+      videoUrl: "/images/face_detection.mp4",
+      videoType: "local"
+    },
+    {
+      id: 10,
+      title: "Anomaly Detection System",
+      shortDescription: "A robust AI system for detecting rare events, abnormal behaviors, and hidden outliers in high-dimensional data.",
+      fullDescription:
+        "A highly advanced anomaly detection platform designed to identify unusual patterns, rare events, and subtle deviations across complex datasets. This project combines state-of-the-art unsupervised learning methods with deep learning architectures to deliver precise, reliable anomaly detection across multiple domains. The system was refined and stress-tested during high-level competitive environments such as the IndabaX Tunisia 2025 Hackathon—where I achieved 2nd place out of 133 teams—further validating the model's efficiency, scalability, and real-world applicability. Built to be domain-agnostic, it can be applied to fraud detection, cyber-security intrusion detection, industrial defect monitoring, predictive maintenance, healthcare anomaly spotting, and more. The platform integrates Isolation Forest, statistical anomaly scoring, and deep autoencoder networks to detect both global and context-specific anomalies. Visual dashboards, real-time monitoring, and customizable sensitivity settings make it suitable for production-level deployment.",
+      image: "/images/anomaly.jpg",
+      tech: [
+        "Python",
+        "Machine Learning",
+        "Scikit-learn",
+        "Isolation Forest",
+        "Autoencoders",
+        "Pandas",
+        "NumPy",
+        "TensorFlow"
+      ],
+      highlights: [
+        "Multi-layer anomaly detection pipelines combining classical ML and deep learning",
+        "Real-time anomaly scoring, monitoring dashboards, and intelligent alerting",
+        "Advanced statistical and model-based detection (Isolation Forest, Autoencoders, z-score, KDE)",
+        "Highly scalable processing optimized for large and streaming datasets",
+        "Domain-agnostic architecture suitable for finance, security, healthcare, and industry",
+        "Customizable sensitivity thresholds to fine-tune false-positive vs. false-negative balance",
+        "Model validated in competitive AI settings (IndabaX Tunisia 2025 – 2nd place achievement)"
+      ],
+      date: "2024"
+    },
+    {
+      id: 11,
+      title: "Intelligent News Research AI Agent",
+      shortDescription: "AI agent that understands queries, searches the web, analyzes data, detects fake news, and provides comprehensive research reports",
+      fullDescription: "An advanced AI-powered news research agent that transforms how users gather and analyze information. Users simply ask a query in natural language, and the intelligent agent understands the intent, creates a research plan, and autonomously searches through the internet to gather relevant information. The system scrapes data from multiple sources, cleans and processes the collected information, performs intelligent summarization, and employs advanced fake news detection algorithms to verify credibility. The agent provides users with comprehensive, detailed reports containing everything they need—from verified facts to source analysis, credibility scores, and synthesized insights. This end-to-end solution combines AI planning, web scraping, data cleaning, NLP summarization, and fact-checking into a single intelligent research assistant.",
+      image: "/images/news.avif",
+      tech: ["Python", "AI Agents", "LLMs", "Web Scraping", "NLP", "Data Cleaning", "Fake News Detection", "Summarization"],
+      highlights: [
+        "Natural language query understanding and intent recognition",
+        "Autonomous research planning and strategy generation",
+        "Intelligent web search and multi-source data scraping",
+        "Advanced data cleaning and preprocessing pipelines",
+        "AI-powered content summarization and synthesis",
+        "Fake news detection and credibility verification",
+        "Comprehensive research reports with detailed analysis",
+        "Source verification and credibility scoring",
+        "Real-time information gathering and processing"
+      ],
+      date: "2024",
+      videoUrl: "/images/deep search.mp4",
+      videoType: "local"
+    },
+    {
+      id: 12,
+      title: "YottaNest",
+      shortDescription:
+        "AI-driven compliance and credit intelligence platform for banks and financial institutions.",
+      fullDescription:
+        "YottaNest is an AI-powered compliance and credit intelligence platform designed to transform how banks and financial institutions manage KYC/AML processes and credit decisioning. As a co-founded venture, it focuses on building scalable automation systems that replace slow, manual compliance workflows with intelligent, real-time decision engines. The platform integrates advanced machine learning, document intelligence, multi-source data aggregation, and high-performance cloud infrastructure to deliver accurate, audit-ready insights within minutes rather than hours. YottaNest automatically extracts and analyzes data from corporate filings, contracts, identification documents, financial statements, and industry registries—across multiple formats and languages. Built for enterprise environments, YottaNest provides automated company and credit reports, risk scoring, due diligence workflows, and regulatory compliance checks. By reducing operational effort by over 90%, it helps banks streamline onboarding, enhance transparency, strengthen trust, and make faster, more confident lending and compliance decisions. This ongoing venture continues to evolve into a next-generation intelligence layer for the future of digital finance.",
+      image: "/images/yottanest.png",
+      tech: [
+          "AI/ML",
+          "Python",
+          "React",
+          "Next.js",
+          "Cloud Infrastructure",
+          "Data Science",
+          "NLP",
+          "Document Intelligence",
+          "ETL Pipelines"
+      ],
+      highlights: [
+        "End-to-end AI automation for KYC/AML compliance",
+        "Automated company & credit reporting systems",
+        "Multi-source data collection across public and private datasets",
+        "Document intelligence for extracting structured insights from complex files",
+        "Real-time risk scoring and decision engines",
+        "High-performance, scalable cloud architecture",
+        "Audit-ready outputs with improved transparency",
+        "Co-founded and built as an enterprise-grade AI startup"
+      ],
+      date: "2024 - Present"
     }
   ]
 
+  // Helper function to convert YouTube URL to embed format
+  const getYouTubeEmbedUrl = (url: string): string => {
+    if (url.includes('youtube.com/embed/')) return url
+    if (url.includes('youtube.com/watch?v=')) {
+      const videoId = url.split('v=')[1]?.split('&')[0]
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : url
+    }
+    if (url.includes('youtu.be/')) {
+      const videoId = url.split('youtu.be/')[1]?.split('?')[0]
+      return videoId ? `https://www.youtube.com/embed/${videoId}` : url
+    }
+    return url
+  }
+
   const openProjectModal = (project: Project) => {
-    setSelectedProject(project)
+    // Auto-detect video type if not specified
+    const processedProject = { ...project }
+    if (processedProject.videoUrl && !processedProject.videoType) {
+      if (processedProject.videoUrl.includes('youtube.com') || processedProject.videoUrl.includes('youtu.be')) {
+        processedProject.videoType = "youtube"
+        processedProject.videoUrl = getYouTubeEmbedUrl(processedProject.videoUrl)
+      } else {
+        processedProject.videoType = "local"
+      }
+    }
+    setSelectedProject(processedProject)
     setIsModalOpen(true)
   }
+
+  // Get projects to display based on showAll state
+  const displayedProjects = showAll ? projects : projects.slice(0, INITIAL_DISPLAY_COUNT)
+  const hasMoreProjects = projects.length > INITIAL_DISPLAY_COUNT
 
   return (
     <>
@@ -181,14 +325,14 @@ const Projects = () => {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center glow-text">Featured Projects</h2>
 
-          {/* Horizontal scroll container for mobile, grid for desktop */}
-          <div ref={scrollContainerRef} className="overflow-x-auto pb-6 lg:overflow-visible">
-            <div className="flex lg:grid lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
-              {projects.map((project, index) => (
+          {/* Responsive grid for all screen sizes */}
+          <div ref={scrollContainerRef} className="pb-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
+              {displayedProjects.map((project, index) => (
                 <div
                   key={project.id}
-                  className="project-card flex-shrink-0 w-80 lg:w-auto rounded-2xl overflow-hidden group hover:scale-105 hover:glow-box transition-all duration-500 cursor-pointer border border-border/50 bg-card/50 backdrop-blur-sm animate-fade-in-up"
-                  style={{ animationDelay: `${index * 0.1}s` }}
+                  className="project-card rounded-2xl overflow-hidden group hover:scale-105 hover:glow-box transition-all duration-500 cursor-pointer border border-border/50 bg-card/50 backdrop-blur-sm animate-fade-in-up"
+                  style={{ animationDelay: `${(index % INITIAL_DISPLAY_COUNT) * 0.1}s` }}
                   onClick={() => openProjectModal(project)}
                 >
                   <div className="relative h-48 overflow-hidden">
@@ -251,6 +395,45 @@ const Projects = () => {
               ))}
             </div>
           </div>
+
+          {/* See More / See Less Button */}
+          {hasMoreProjects && (
+            <div className="flex justify-center mt-10">
+              <Button
+                onClick={() => setShowAll(!showAll)}
+                variant="outline"
+                size="lg"
+                className="group px-8 py-6 text-lg font-semibold border-primary/30 hover:border-primary hover:bg-primary/10 hover:text-primary transition-all duration-300 glow-box"
+              >
+                {showAll ? (
+                  <>
+                    Show Less
+                    <svg
+                      className="ml-2 group-hover:-translate-y-1 transition-transform w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
+                    </svg>
+                  </>
+                ) : (
+                  <>
+                    See More Projects
+                    <svg
+                      className="ml-2 group-hover:translate-y-1 transition-transform w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </svg>
+                  </>
+                )}
+              </Button>
+            </div>
+          )}
+
         </div>
       </section>
 
@@ -262,16 +445,31 @@ const Projects = () => {
               <DialogHeader className="space-y-4">
                 <div className="relative -mx-6 -mt-6 overflow-hidden rounded-t-lg">
                   {selectedProject.videoUrl ? (
-                    /* YouTube Video Embed */
-                    <div className="relative w-full" style={{ paddingBottom: '56.25%' }}>
-                      <iframe
-                        src={selectedProject.videoUrl}
-                        title={selectedProject.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowFullScreen
-                        className="absolute inset-0 w-full h-full"
-                      />
-                    </div>
+                    (selectedProject.videoType === "youtube" || selectedProject.videoUrl.includes('youtube.com') || selectedProject.videoUrl.includes('youtu.be')) ? (
+                      /* YouTube Video Embed */
+                      <div className="relative w-full bg-black rounded-t-lg" style={{ paddingBottom: '56.25%' }}>
+                        <iframe
+                          src={selectedProject.videoType === "youtube" ? selectedProject.videoUrl : getYouTubeEmbedUrl(selectedProject.videoUrl)}
+                          title={selectedProject.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          className="absolute inset-0 w-full h-full rounded-t-lg"
+                        />
+                      </div>
+                    ) : (
+                      /* Local MP4 Video */
+                      <div className="relative w-full bg-black rounded-t-lg" style={{ paddingBottom: '56.25%' }}>
+                        <video
+                          src={selectedProject.videoUrl}
+                          controls
+                          className="absolute inset-0 w-full h-full object-contain rounded-t-lg"
+                          preload="metadata"
+                          playsInline
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                      </div>
+                    )
                   ) : (
                     /* Image Fallback */
                     <div className="relative h-64 sm:h-80">

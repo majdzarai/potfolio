@@ -58,7 +58,7 @@ const Footer = () => {
             <h4 className="font-semibold mb-4 text-primary">Follow Me</h4>
             <div className="space-y-2 text-muted-foreground">
               <a
-                href="https://github.com"
+                href="https://github.com/majdzarai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block hover:text-primary transition-colors"
@@ -66,20 +66,12 @@ const Footer = () => {
                 GitHub
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/majd-zarai-b08050249"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block hover:text-primary transition-colors"
               >
                 LinkedIn
-              </a>
-              <a
-                href="https://twitter.com"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block hover:text-primary transition-colors"
-              >
-                Twitter
               </a>
             </div>
           </div>
@@ -87,7 +79,7 @@ const Footer = () => {
 
         <div className="pt-8 border-t border-primary/10 text-center text-muted-foreground">
           <p className="flex items-center justify-center gap-2">
-            © 2025 Majd Zarai. Built with <span className="text-primary animate-pulse">❤️</span> using React & Tailwind
+            © 2025 Majd Zarai.
           </p>
         </div>
       </div>
