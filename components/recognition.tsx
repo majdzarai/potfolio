@@ -39,13 +39,13 @@ const recognitions: Recognition[] = [
       "/images/sup.jpg",
       "/images/2.jpg",
       "/images/1.jpg",
-      "/images/hak.mp4",
-      "/images/hak2.mp4",
+      "https://drive.google.com/file/d/15WC1FBzGJndiUIp6eWPMMKUykraRNrkI/view?usp=drive_link",
+      "https://drive.google.com/file/d/1xlHaCCywtoEqn9jORUHFbbI5Ax5NbMAq/view?usp=drive_link",
       "/images/hak3.jpg",
       "/images/hak4.jpg",
       "/images/hak5.jpg",
       "/images/hak6.jpg",
-      "/images/hak7.mp4",
+      "https://drive.google.com/file/d/1dmqw75v9x9hFLwIj7IP9GdQ8zrIma_KY/view?usp=drive_link",
       
 
       
@@ -64,9 +64,9 @@ const recognitions: Recognition[] = [
       "/images/ball.jpg",
       "/images/ball1.jpg",
     "/images/ball2.jpg",
-    "/images/ball3.mp4",
-    "/images/ball4.mp4",
-    "/images/vigilantx.mp4",
+    "https://drive.google.com/file/d/1mBmhzh4jj8v2yCqHDvC_1vIahpLgFU-h/view?usp=drive_link",
+    "https://drive.google.com/file/d/1M1MiKWeGgK9iB-ulOG-DhSPkM-5H-LQe/view?usp=drive_link",
+    "https://drive.google.com/file/d/1iA1j5IrXtp6UD2fUBOvbvUOLRwuxlq23/view?usp=drive_link",
     "/images/value8.jpg",
     
     
@@ -84,7 +84,7 @@ const recognitions: Recognition[] = [
     images: [
       "/images/value1.jpg",
       "/images/value2.jpg",
-      "/images/value3.mp4",
+      "https://drive.google.com/file/d/1Yx5_VUmnZ1IzV7qA3tksNwbULD1UJIBS/view?usp=drive_link",
       "/images/value5.jpg",
       "/images/value6.jpg",
       "/images/value7.jpg",
@@ -99,7 +99,12 @@ const recognitions: Recognition[] = [
 // Helper function to check if media is a video
 const isVideo = (url: string): boolean => {
   const videoExtensions = ['.mp4', '.webm', '.ogg', '.mov', '.avi', '.mkv']
-  return videoExtensions.some(ext => url.toLowerCase().includes(ext))
+  return videoExtensions.some(ext => url.toLowerCase().includes(ext)) || url.includes('drive.google.com')
+}
+
+// Helper function to check if media is a Google Drive link
+const isGoogleDrive = (url: string): boolean => {
+  return url.includes('drive.google.com')
 }
 
 const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
@@ -243,15 +248,25 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
                     className="w-full h-full flex items-center justify-center p-4"
                   >
                     {isCurrentVideo ? (
-                      <video
-                        src={currentMedia}
-                        controls
-                        autoPlay
-                        className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
-                        playsInline
-                      >
-                        Your browser does not support the video tag.
-                      </video>
+                      isGoogleDrive(currentMedia) ? (
+                        <iframe
+                          src={currentMedia.includes('/preview') ? currentMedia : currentMedia.replace('/view?usp=drive_link', '/preview').replace('/file/d/', '/file/d/').replace('/view', '/preview')}
+                          title={`${title} - Video ${currentImageIndex + 1}`}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                          allowFullScreen
+                          className="w-full h-full min-h-[400px] rounded-lg shadow-2xl"
+                        />
+                      ) : (
+                        <video
+                          src={currentMedia}
+                          controls
+                          autoPlay
+                          className="max-w-full max-h-full object-contain rounded-lg shadow-2xl"
+                          playsInline
+                        >
+                          Your browser does not support the video tag.
+                        </video>
+                      )
                     ) : (
                       <img
                         src={currentMedia}
@@ -335,19 +350,34 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
                           }}
                         >
                           {isVideoMedia ? (
-                            <>
-                              <video
-                                src={media}
-                                className="w-full h-full object-cover"
-                                muted
-                                playsInline
-                              />
-                              <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
-                                <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                  <path d="M8 5v14l11-7z"/>
-                                </svg>
-                              </div>
-                            </>
+                            isGoogleDrive(media) ? (
+                              <>
+                                <iframe
+                                  src={media.includes('/preview') ? media : media.replace('/view?usp=drive_link', '/preview').replace('/file/d/', '/file/d/').replace('/view', '/preview')}
+                                  className="w-full h-full object-cover pointer-events-none"
+                                  title={`Thumbnail ${idx + 1}`}
+                                />
+                                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                  </svg>
+                                </div>
+                              </>
+                            ) : (
+                              <>
+                                <video
+                                  src={media}
+                                  className="w-full h-full object-cover"
+                                  muted
+                                  playsInline
+                                />
+                                <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
+                                  <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                    <path d="M8 5v14l11-7z"/>
+                                  </svg>
+                                </div>
+                              </>
+                            )
                           ) : (
                             <img
                               src={media}

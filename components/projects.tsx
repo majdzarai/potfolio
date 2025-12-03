@@ -22,7 +22,7 @@ interface Project {
   achievements?: string[]
   date: string
   videoUrl?: string
-  videoType?: "youtube" | "local"
+  videoType?: "youtube" | "local" | "drive"
 }
 
 const Projects = () => {
@@ -92,8 +92,8 @@ const Projects = () => {
         "Persistent parking spot positions with Pickle"
       ],
       date: "Mar 2025",
-      videoUrl: "/images/car detection.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/1a3SAvPWvC4elut3U41JFK_jQ0nd4lJpH/preview",
+      videoType: "drive"
     },
     {
       id: 4,
@@ -110,8 +110,8 @@ const Projects = () => {
         "Publicly accessible deployed model"
       ],
       date: "Jan 2025 - Feb 2025",
-      videoUrl: "/images/Churn Prediction.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/197W4Q_4IfUhuF4-p4T3DHN4l2Ca-Whn6/preview",
+      videoType: "drive"
     },
     {
       id: 5,
@@ -128,8 +128,8 @@ const Projects = () => {
         "Designed to enhance learning, curiosity, and creativity"
       ],
       date: "Dec 2024",
-      videoUrl: "/images/Math Platform.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/1wqfT5MrbtI5tHs5x61Siiu739dm3aHOc/preview",
+      videoType: "drive"
     },
     {
       id: 6,
@@ -146,8 +146,8 @@ const Projects = () => {
         "Fast and scalable image generation"
       ],
       date: "Nov 2024 - Dec 2024",
-      videoUrl: "/images/GENME.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/1DFxPRpSBp1-fXMXGLjK02DpF9wbWDhsT/preview",
+      videoType: "drive"
     },
     {
       id: 7,
@@ -164,8 +164,8 @@ const Projects = () => {
         "Administrators: Manage users and oversee platform operations"
       ],
       date: "Jul 2024 - Aug 2024",
-      videoUrl: "/images/rivez.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/1UOc9eiePiIXUZZxUYRY-GAet6Y2-2Up5/preview",
+      videoType: "drive"
     },
     {
       id: 8,
@@ -182,8 +182,8 @@ const Projects = () => {
         "Supports Deaf and Hard-of-Hearing communities"
       ],
       date: "Feb 2024 - Mar 2024",
-      videoUrl: "/images/Sign Language.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/1yUm9G2btHkMzHwA8n2peo6gBlMqyf4oM/preview",
+      videoType: "drive"
     },
     {
       id: 9,
@@ -200,8 +200,8 @@ const Projects = () => {
         "Webcam and video file support"
       ],
       date: "2024",
-      videoUrl: "/images/face_detection.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/1cNfHnKnOgozAJfPKJ_Zc1iUR4kyi1hmh/preview",
+      videoType: "drive"
     },
     {
       id: 10,
@@ -250,8 +250,8 @@ const Projects = () => {
         "Real-time information gathering and processing"
       ],
       date: "2024",
-      videoUrl: "/images/deep search.mp4",
-      videoType: "local"
+      videoUrl: "https://drive.google.com/file/d/1J471JXQxsyjWbSqCyYVyofSBRifBVUGN/preview",
+      videoType: "drive"
     },
     {
       id: 12,
@@ -452,6 +452,17 @@ const Projects = () => {
                           src={selectedProject.videoType === "youtube" ? selectedProject.videoUrl : getYouTubeEmbedUrl(selectedProject.videoUrl)}
                           title={selectedProject.title}
                           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                          allowFullScreen
+                          className="absolute inset-0 w-full h-full rounded-t-lg"
+                        />
+                      </div>
+                    ) : (selectedProject.videoType === "drive" || selectedProject.videoUrl.includes('drive.google.com')) ? (
+                      /* Google Drive Video Embed */
+                      <div className="relative w-full bg-black rounded-t-lg" style={{ paddingBottom: '56.25%' }}>
+                        <iframe
+                          src={selectedProject.videoUrl.includes('/preview') ? selectedProject.videoUrl : selectedProject.videoUrl.replace('/view?usp=drive_link', '/preview').replace('/file/d/', '/file/d/').replace('/view', '/preview')}
+                          title={selectedProject.title}
+                          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                           allowFullScreen
                           className="absolute inset-0 w-full h-full rounded-t-lg"
                         />
