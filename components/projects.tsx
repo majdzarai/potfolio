@@ -23,6 +23,7 @@ interface Project {
   date: string
   videoUrl?: string
   videoType?: "youtube" | "local" | "drive"
+  category: "professional" | "academic" | "personal"
 }
 
 const Projects = () => {
@@ -31,6 +32,7 @@ const Projects = () => {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showAll, setShowAll] = useState(false)
+  const [selectedCategory, setSelectedCategory] = useState<"all" | "professional" | "academic" | "personal">("all")
   const INITIAL_DISPLAY_COUNT = 4
 
   const projects: Project[] = [
@@ -59,7 +61,8 @@ const Projects = () => {
       ],
       date: "Jan 2025 - Jun 2025",
       videoUrl: "https://www.youtube.com/embed/cQDnZIdzZVg",
-      videoType: "youtube"
+      videoType: "youtube",
+      category: "professional"
     },
     {
       id: 2,
@@ -75,7 +78,8 @@ const Projects = () => {
         "Confusion matrix and ROC curve for model evaluation",
         "Data-driven customer retention strategy support"
       ],
-      date: "Mar 2025"
+      date: "Mar 2025",
+      category: "academic"
     },
     {
       id: 3,
@@ -93,7 +97,8 @@ const Projects = () => {
       ],
       date: "Mar 2025",
       videoUrl: "https://drive.google.com/file/d/1a3SAvPWvC4elut3U41JFK_jQ0nd4lJpH/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "personal"
     },
     {
       id: 4,
@@ -111,7 +116,8 @@ const Projects = () => {
       ],
       date: "Jan 2025 - Feb 2025",
       videoUrl: "https://drive.google.com/file/d/197W4Q_4IfUhuF4-p4T3DHN4l2Ca-Whn6/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "academic"
     },
     {
       id: 5,
@@ -129,7 +135,8 @@ const Projects = () => {
       ],
       date: "Dec 2024",
       videoUrl: "https://drive.google.com/file/d/1wqfT5MrbtI5tHs5x61Siiu739dm3aHOc/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "personal"
     },
     {
       id: 6,
@@ -147,7 +154,8 @@ const Projects = () => {
       ],
       date: "Nov 2024 - Dec 2024",
       videoUrl: "https://drive.google.com/file/d/1DFxPRpSBp1-fXMXGLjK02DpF9wbWDhsT/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "personal"
     },
     {
       id: 7,
@@ -165,7 +173,8 @@ const Projects = () => {
       ],
       date: "Jul 2024 - Aug 2024",
       videoUrl: "https://drive.google.com/file/d/1UOc9eiePiIXUZZxUYRY-GAet6Y2-2Up5/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "academic"
     },
     {
       id: 8,
@@ -183,7 +192,8 @@ const Projects = () => {
       ],
       date: "Feb 2024 - Mar 2024",
       videoUrl: "https://drive.google.com/file/d/1yUm9G2btHkMzHwA8n2peo6gBlMqyf4oM/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "personal"
     },
     {
       id: 9,
@@ -201,7 +211,8 @@ const Projects = () => {
       ],
       date: "2024",
       videoUrl: "https://drive.google.com/file/d/1cNfHnKnOgozAJfPKJ_Zc1iUR4kyi1hmh/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "personal"
     },
     {
       id: 10,
@@ -229,7 +240,8 @@ const Projects = () => {
         "Customizable sensitivity thresholds to fine-tune false-positive vs. false-negative balance",
         "Model validated in competitive AI settings (IndabaX Tunisia 2025 – 2nd place achievement)"
       ],
-      date: "2024"
+      date: "2024",
+      category: "professional"
     },
     {
       id: 11,
@@ -251,7 +263,8 @@ const Projects = () => {
       ],
       date: "2024",
       videoUrl: "https://drive.google.com/file/d/1J471JXQxsyjWbSqCyYVyofSBRifBVUGN/preview",
-      videoType: "drive"
+      videoType: "drive",
+      category: "academic"
     },
     {
       id: 12,
@@ -262,15 +275,15 @@ const Projects = () => {
         "YottaNest is an AI-powered compliance and credit intelligence platform designed to transform how banks and financial institutions manage KYC/AML processes and credit decisioning. As a co-founded venture, it focuses on building scalable automation systems that replace slow, manual compliance workflows with intelligent, real-time decision engines. The platform integrates advanced machine learning, document intelligence, multi-source data aggregation, and high-performance cloud infrastructure to deliver accurate, audit-ready insights within minutes rather than hours. YottaNest automatically extracts and analyzes data from corporate filings, contracts, identification documents, financial statements, and industry registries—across multiple formats and languages. Built for enterprise environments, YottaNest provides automated company and credit reports, risk scoring, due diligence workflows, and regulatory compliance checks. By reducing operational effort by over 90%, it helps banks streamline onboarding, enhance transparency, strengthen trust, and make faster, more confident lending and compliance decisions. This ongoing venture continues to evolve into a next-generation intelligence layer for the future of digital finance.",
       image: "/images/yottanest.png",
       tech: [
-          "AI/ML",
-          "Python",
-          "React",
-          "Next.js",
-          "Cloud Infrastructure",
-          "Data Science",
-          "NLP",
-          "Document Intelligence",
-          "ETL Pipelines"
+        "AI/ML",
+        "Python",
+        "React",
+        "Next.js",
+        "Cloud Infrastructure",
+        "Data Science",
+        "NLP",
+        "Document Intelligence",
+        "ETL Pipelines"
       ],
       highlights: [
         "End-to-end AI automation for KYC/AML compliance",
@@ -282,8 +295,54 @@ const Projects = () => {
         "Audit-ready outputs with improved transparency",
         "Co-founded and built as an enterprise-grade AI startup"
       ],
-      date: "2024 - Present"
+      date: "2024 - Present",
+      category: "professional"
+    },
+    {
+      id: 13,
+      title: "GraphRAG Agentic Intelligence System",
+      shortDescription:
+        "An agentic AI system using LangGraph, custom tools, and a Neo4j-powered GraphRAG pipeline to enable knowledge reasoning and dynamic tool usage.",
+
+      fullDescription:
+        "This project is a fully implemented Agentic AI system built as part of a Generative AI assignment. The system integrates LangGraph agent orchestration, custom-built tools, and a GraphRAG pipeline connected to a Neo4j knowledge graph. It ingests structured and unstructured data, builds a vector-enhanced knowledge graph, and enables retrieval, reasoning, and decision-making through an LLM-powered agent. The agent autonomously decides when to call tools, perform graph retrieval, or execute Cypher queries to generate accurate, context-aware answers. A FastAPI backend exposes clean endpoints for querying the agent, retrieving graph metadata, and running graph-based reasoning workflows. The system also features optional multi-agent collaboration, hybrid search (vector + graph traversal), and a simple UI/CLI interface for interactive querying. This project demonstrates end-to-end mastery of agent workflows, graph databases, LLM reasoning, and production-ready backend design.",
+
+      image: "/images/graph.jpg",
+
+      tech: [
+        "LangGraph",
+        "Neo4j",
+        "GraphRAG",
+        "Python",
+        "FastAPI",
+        "OpenAI / OpenRouter",
+        "Vector Search",
+        "Cypher",
+        "LLM Tooling",
+        "Embeddings",
+        "Docker",
+        "Streamlit (optional UI)"
+      ],
+
+      highlights: [
+        "Designed and implemented a multi-step agent workflow using LangGraph",
+        "Developed two+ custom tools, including graph query and hybrid retrieval tools",
+        "Built a Neo4j knowledge graph with nodes, relationships, and properties",
+        "Implemented GraphRAG with vector similarity + graph traversal",
+        "Enabled LLM reasoning that chooses tools autonomously",
+        "Created a FastAPI backend with /ask and /graph-info endpoints",
+        "Added multi-agent reasoning capability (optional)",
+        "Built minimal CLI/UI for live interaction",
+        "Produced schema diagrams, architecture documentation, and demo video",
+        "Delivered a fully working end-to-end system in under 72 hours"
+      ],
+      date: "2025",
+      videoUrl: "https://drive.google.com/file/d/1-f54cQ7--f9X9Y3hks1LRpm6eKXM8z9o/preview",
+      videoType: "drive",
+      category: "professional"
+
     }
+
   ]
 
   // Helper function to convert YouTube URL to embed format
@@ -315,15 +374,48 @@ const Projects = () => {
     setIsModalOpen(true)
   }
 
-  // Get projects to display based on showAll state
-  const displayedProjects = showAll ? projects : projects.slice(0, INITIAL_DISPLAY_COUNT)
-  const hasMoreProjects = projects.length > INITIAL_DISPLAY_COUNT
+  // Get projects to display based on category filter and showAll state
+  const filteredProjects = selectedCategory === "all"
+    ? projects
+    : projects.filter(p => p.category === selectedCategory)
+  const displayedProjects = showAll ? filteredProjects : filteredProjects.slice(0, INITIAL_DISPLAY_COUNT)
+  const hasMoreProjects = filteredProjects.length > INITIAL_DISPLAY_COUNT
+
+  // Category labels for display
+  const categoryLabels = {
+    all: "All Projects",
+    professional: "Professional",
+    academic: "Academic",
+    personal: "Personal"
+  }
 
   return (
     <>
       <section ref={sectionRef} className="relative py-20 px-4 sm:px-6 lg:px-8 animate-fade-in" id="projects">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl sm:text-5xl font-bold mb-12 text-center glow-text">Featured Projects</h2>
+
+          {/* Category Filter Buttons */}
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
+            {(["all", "professional", "academic", "personal"] as const).map((category) => (
+              <button
+                key={category}
+                onClick={() => {
+                  setSelectedCategory(category)
+                  setShowAll(false) // Reset to initial count when changing category
+                }}
+                className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 border-2 ${selectedCategory === category
+                  ? "bg-primary text-primary-foreground border-primary shadow-lg shadow-primary/50 scale-105"
+                  : "bg-card/50 text-muted-foreground border-border/50 hover:border-primary/50 hover:text-primary hover:scale-105"
+                  }`}
+              >
+                {categoryLabels[category]}
+                <span className="ml-2 text-xs opacity-70">
+                  ({category === "all" ? projects.length : projects.filter(p => p.category === category).length})
+                </span>
+              </button>
+            ))}
+          </div>
 
           {/* Responsive grid for all screen sizes */}
           <div ref={scrollContainerRef} className="pb-6">
@@ -367,8 +459,8 @@ const Projects = () => {
                       )}
                     </div>
 
-                    <Button 
-                      variant="ghost" 
+                    <Button
+                      variant="ghost"
                       className="w-full group/btn hover:bg-primary/10 hover:text-primary"
                       onClick={(e) => {
                         e.stopPropagation()
@@ -501,7 +593,7 @@ const Projects = () => {
                       {selectedProject.videoUrl && (
                         <span className="px-3 py-1 text-xs bg-red-500/20 text-red-400 rounded-full border border-red-500/30 flex items-center gap-1">
                           <svg className="w-3 h-3" viewBox="0 0 24 24" fill="currentColor">
-                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
+                            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
                           </svg>
                           Video Demo
                         </span>
@@ -559,8 +651,8 @@ const Projects = () => {
                     </h4>
                     <ul className="space-y-2">
                       {selectedProject.highlights.map((highlight, index) => (
-                        <li 
-                          key={index} 
+                        <li
+                          key={index}
                           className="flex items-start gap-3 text-muted-foreground animate-fade-in-up"
                           style={{ animationDelay: `${index * 0.05}s` }}
                         >
@@ -583,8 +675,8 @@ const Projects = () => {
                     </h4>
                     <ul className="space-y-2">
                       {selectedProject.achievements.map((achievement, index) => (
-                        <li 
-                          key={index} 
+                        <li
+                          key={index}
                           className="flex items-start gap-3 text-foreground font-medium animate-fade-in-up"
                           style={{ animationDelay: `${index * 0.1}s` }}
                         >
@@ -598,7 +690,7 @@ const Projects = () => {
 
                 {/* Close Button */}
                 <div className="pt-4 border-t border-border/50">
-                  <Button 
+                  <Button
                     onClick={() => setIsModalOpen(false)}
                     className="w-full bg-primary hover:bg-primary/90 text-primary-foreground font-semibold py-6 glow-box hover:scale-[1.02] transition-all"
                   >

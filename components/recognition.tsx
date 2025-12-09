@@ -46,9 +46,9 @@ const recognitions: Recognition[] = [
       "/images/hak5.jpg",
       "/images/hak6.jpg",
       "https://drive.google.com/file/d/1dmqw75v9x9hFLwIj7IP9GdQ8zrIma_KY/view?usp=drive_link",
-      
 
-      
+
+
     ],
   },
   {
@@ -63,13 +63,13 @@ const recognitions: Recognition[] = [
     images: [
       "/images/ball.jpg",
       "/images/ball1.jpg",
-    "/images/ball2.jpg",
-    "https://drive.google.com/file/d/1mBmhzh4jj8v2yCqHDvC_1vIahpLgFU-h/view?usp=drive_link",
-    "https://drive.google.com/file/d/1M1MiKWeGgK9iB-ulOG-DhSPkM-5H-LQe/view?usp=drive_link",
-    "https://drive.google.com/file/d/1iA1j5IrXtp6UD2fUBOvbvUOLRwuxlq23/view?usp=drive_link",
-    "/images/value8.jpg",
-    
-    
+      "/images/ball2.jpg",
+      "https://drive.google.com/file/d/1mBmhzh4jj8v2yCqHDvC_1vIahpLgFU-h/view?usp=drive_link",
+      "https://drive.google.com/file/d/1M1MiKWeGgK9iB-ulOG-DhSPkM-5H-LQe/view?usp=drive_link",
+      "https://drive.google.com/file/d/1iA1j5IrXtp6UD2fUBOvbvUOLRwuxlq23/view?usp=drive_link",
+      "/images/value8.jpg",
+
+
     ],
   },
   {
@@ -90,8 +90,8 @@ const recognitions: Recognition[] = [
       "/images/value7.jpg",
       "/images/value12.jpg",
       "/images/vl.jpg",
-      
-     
+
+
     ],
   },
 ]
@@ -156,11 +156,11 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
       <motion.div
         initial={{ opacity: 0, y: 50 }}
         whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, amount: 0.25 }}
+        viewport={{ once: true, amount: 0.15 }}
         transition={{
           type: "spring",
-          delay: index * 0.2,
-          duration: 0.75,
+          delay: index * 0.15,
+          duration: 0.6,
         }}
         onClick={() => {
           if (images.length > 0) {
@@ -168,55 +168,98 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
             setCurrentImageIndex(0)
           }
         }}
-        className={`bg-card/80 backdrop-blur-md border border-border/50 rounded-3xl p-8 sm:p-10 hover:border-primary/50 hover:glow-box transition-all duration-300 flex-shrink-0 w-[320px] sm:w-[380px] lg:w-[400px] ${images.length > 0 ? 'cursor-pointer' : ''}`}
+        className={`group relative bg-gradient-to-br from-card/90 to-card/50 backdrop-blur-xl border border-border/50 rounded-3xl p-6 sm:p-8 lg:p-10 hover:border-primary/50 hover:shadow-2xl hover:shadow-primary/20 transition-all duration-500 overflow-hidden ${images.length > 0 ? 'cursor-pointer' : ''}`}
       >
-        {/* Quote Icon */}
-        <p className="text-[48px] font-black text-primary/30 mb-2">"</p>
+        {/* Floating Icon Badge - Top Right */}
+        <motion.div
+          initial={{ scale: 0, rotate: -180 }}
+          whileInView={{ scale: 1, rotate: 0 }}
+          viewport={{ once: true }}
+          transition={{
+            type: "spring",
+            delay: index * 0.15 + 0.3,
+            duration: 0.8,
+          }}
+          className="absolute -top-4 -right-4 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-background shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 z-10"
+          style={{
+            boxShadow: `0 8px 32px ${iconBg}60`,
+          }}
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />
+          <img
+            src={icon}
+            alt={title}
+            className="w-full h-full object-cover"
+          />
+        </motion.div>
 
-        <div className="mt-1">
+        {/* Background Gradient Orb */}
+        <div
+          className="absolute top-0 right-0 w-64 h-64 rounded-full blur-3xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"
+          style={{
+            background: `radial-gradient(circle, ${iconBg} 0%, transparent 70%)`,
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10">
+          {/* Award Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 border border-primary/20 mb-6">
+            <svg className="w-4 h-4 text-primary" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+            </svg>
+            <span className="text-xs sm:text-sm font-semibold text-primary">{type}</span>
+            <span className="text-xs sm:text-sm text-muted-foreground">•</span>
+            <span className="text-xs sm:text-sm text-muted-foreground">{year}</span>
+          </div>
+
           {/* Title */}
-          <h3 className="text-[18px] sm:text-[20px] font-bold text-foreground mb-3 leading-tight">
+          <h3 className="text-xl sm:text-2xl lg:text-3xl font-bold text-foreground mb-4 leading-tight pr-20 lg:pr-24">
             {title}
           </h3>
 
           {/* Description */}
-          <p className="text-[14px] sm:text-[16px] tracking-wider text-muted-foreground leading-relaxed mb-6">
+          <p className="text-sm sm:text-base text-muted-foreground leading-relaxed mb-6">
             {description}
           </p>
 
-          {/* Bottom Section with Image and Info */}
-          <div className="mt-7 flex items-center justify-between gap-3">
-            <div className="flex flex-1 flex-col">
-              <p className="text-[14px] sm:text-[16px] font-medium text-foreground">
-                <span className="text-primary">@</span> {organization}
-              </p>
-              <p className="text-muted-foreground mt-1 text-[12px] sm:text-[14px]">
-                {type} of {year}
-              </p>
-            </div>
-
-            {/* Circular Image */}
-            <div
-              className="h-12 w-12 sm:h-14 sm:w-14 rounded-full overflow-hidden border-2 border-primary/30 flex-shrink-0"
-              style={{
-                boxShadow: `0 4px 20px ${iconBg}40`,
-              }}
-            >
-              <img
-                src={icon}
-                alt={title}
-                className="h-full w-full object-cover"
-              />
-            </div>
+          {/* Organization */}
+          <div className="flex items-center gap-2 mb-4">
+            <svg className="w-5 h-5 text-primary/70" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+            <p className="text-sm sm:text-base font-semibold text-foreground">
+              {organization}
+            </p>
           </div>
 
-          {/* Click hint if images available */}
-          {images.length > 0 && (
-            <div className="mt-4 pt-4 border-t border-border/30 flex items-center justify-center gap-2 text-xs text-primary/70">
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          {/* Project Tag (if exists) */}
+          {project && (
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-secondary/10 border border-secondary/20 mb-4">
+              <svg className="w-4 h-4 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
               </svg>
-              Click to view gallery ({images.length})
+              <span className="text-xs sm:text-sm font-medium text-secondary">{project}</span>
+            </div>
+          )}
+
+          {/* View Gallery Button */}
+          {images.length > 0 && (
+            <div className="mt-6 pt-6 border-t border-border/30">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2 text-sm text-primary/80">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                  </svg>
+                  <span className="font-medium">{images.length} Media</span>
+                </div>
+                <div className="flex items-center gap-2 text-sm text-primary group-hover:gap-3 transition-all">
+                  <span className="font-semibold">View Gallery</span>
+                  <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                  </svg>
+                </div>
+              </div>
             </div>
           )}
         </div>
@@ -314,7 +357,7 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
                   {isCurrentVideo ? (
                     <>
                       <svg className="w-3 h-3 sm:w-4 sm:h-4" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M8 5v14l11-7z"/>
+                        <path d="M8 5v14l11-7z" />
                       </svg>
                       <span>Video</span>
                     </>
@@ -329,21 +372,20 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
                 </div>
               </div>
 
-              {/* Thumbnail Strip */}
+              {/* Thumbnail Strip with Custom Scrollbar */}
               {images.length > 1 && (
                 <div className="px-4 sm:px-6 py-3 sm:py-4 bg-card/30 border-t border-border/30">
-                  <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 scrollbar-hide">
+                  <div className="flex gap-2 sm:gap-3 overflow-x-auto pb-2 custom-scrollbar">
                     {images.map((media, idx) => {
                       const isVideoMedia = isVideo(media)
                       return (
                         <button
                           key={idx}
                           onClick={() => setCurrentImageIndex(idx)}
-                          className={`flex-shrink-0 relative rounded-lg overflow-hidden border-2 transition-all duration-200 ${
-                            currentImageIndex === idx
-                              ? "border-primary scale-105 shadow-lg shadow-primary/50"
-                              : "border-border/50 hover:border-primary/50 opacity-70 hover:opacity-100"
-                          }`}
+                          className={`flex-shrink-0 relative rounded-lg overflow-hidden border-2 transition-all duration-200 ${currentImageIndex === idx
+                            ? "border-primary scale-105 shadow-lg shadow-primary/50"
+                            : "border-border/50 hover:border-primary/50 opacity-70 hover:opacity-100"
+                            }`}
                           style={{
                             width: '80px',
                             height: '80px',
@@ -359,7 +401,7 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
                                 />
                                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                                   <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z"/>
+                                    <path d="M8 5v14l11-7z" />
                                   </svg>
                                 </div>
                               </>
@@ -373,7 +415,7 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
                                 />
                                 <div className="absolute inset-0 bg-black/30 flex items-center justify-center">
                                   <svg className="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
-                                    <path d="M8 5v14l11-7z"/>
+                                    <path d="M8 5v14l11-7z" />
                                   </svg>
                                 </div>
                               </>
@@ -420,7 +462,7 @@ const Recognition = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-12"
+          className="text-center mb-16"
         >
           <p className="text-primary text-sm sm:text-base font-medium tracking-widest uppercase mb-2">
             ACHIEVEMENTS & AWARDS
@@ -430,15 +472,41 @@ const Recognition = () => {
           </h2>
         </motion.div>
 
-        {/* Horizontal Scrollable Cards */}
-        <div className="overflow-x-auto pb-6 -mx-4 sm:-mx-6 lg:-mx-8 px-4 sm:px-6 lg:px-8">
-          <div className="flex gap-6 sm:gap-8 min-w-max">
-            {recognitions.map((recognition, index) => (
-              <RecognitionCard key={index} index={index} {...recognition} />
-            ))}
-          </div>
+        {/* Responsive Grid Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+          {recognitions.map((recognition, index) => (
+            <RecognitionCard key={index} index={index} {...recognition} />
+          ))}
         </div>
       </div>
+
+      {/* Custom Scrollbar Styles */}
+      <style jsx global>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          height: 8px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: hsl(var(--card) / 0.3);
+          border-radius: 10px;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: hsl(var(--primary) / 0.5);
+          border-radius: 10px;
+          transition: background 0.3s ease;
+        }
+        
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: hsl(var(--primary) / 0.8);
+        }
+
+        /* Firefox */
+        .custom-scrollbar {
+          scrollbar-width: thin;
+          scrollbar-color: hsl(var(--primary) / 0.5) hsl(var(--card) / 0.3);
+        }
+      `}</style>
     </section>
   )
 }
