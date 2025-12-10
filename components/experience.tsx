@@ -6,7 +6,7 @@ import {
   VerticalTimelineElement,
 }
 
-from "react-vertical-timeline-component"
+  from "react-vertical-timeline-component"
 import "react-vertical-timeline-component/style.min.css"
 
 interface Experience {
@@ -14,9 +14,9 @@ interface Experience {
   companyName: string
   location?: string
   icon: string
-  iconBg: string
   date: string
   points: string[]
+  website?: string
 }
 
 const experiences: Experience[] = [
@@ -25,8 +25,8 @@ const experiences: Experience[] = [
     companyName: "YottaNest",
     location: "Bulgaria",
     icon: "/images/yottanest.png",
-    iconBg: "#1a5276",
     date: "Jul 2025 – Present",
+    website: "https://yottanest.com",
     points: [
       "Architected advanced multi-agent AI platform automating KYC/AML workflows using Web, Graph, RAG, and Report Agents",
       "Integrated multiple LLMs (Llama 3.1, ChatGPT, DeepSeek, Kimik2, BERT) enabling adaptive reasoning and compliance automation",
@@ -37,9 +37,9 @@ const experiences: Experience[] = [
   {
     title: "AI Engineer Intern",
     companyName: "Value Incubator",
-    icon: "/images/profile.jpg",
-    iconBg: "#3b82f6",
+    icon: "/images/value.png",
     date: "Jan 2025 – Jun 2025",
+    website: "https://value.com.tn/fr/accueil/",
     points: [
       "Architected Django application with advanced semantic chunking, RAG architecture, and automated fact verification for Vigilant X platform",
       "Implemented sophisticated PPTX reporting using LLMs integrated with real-time financial data APIs",
@@ -51,9 +51,9 @@ const experiences: Experience[] = [
     title: "AI Engineer Intern",
     companyName: "Axe Finance",
     location: "Tunisia",
-    icon: "/images/profile.jpg",
-    iconBg: "#06b6d4",
+    icon: "/images/axe.png",
     date: "Jun 2025 – Aug 2025",
+    website: "https://www.axefinance.com",
     points: [
       "Developed state-of-the-art NLP models for real-time adverse media monitoring and risk classification",
       "Built intelligent web scraping agents with adaptive algorithms for continuous data enrichment",
@@ -64,8 +64,8 @@ const experiences: Experience[] = [
     title: "GenAI Engineer Intern",
     companyName: "Sellmax",
     location: "Remote",
-    icon: "/images/profile.jpg",
-    iconBg: "#8b5cf6",
+    icon: "/images/sell.png",
+    website: "https://www.sellmax.ai",
     date: "2024 – 2025",
     points: [
       "Designed end-to-end Tunisian Arabic voice assistant with integrated STT, NLU, and TTS pipelines",
@@ -88,25 +88,40 @@ const ExperienceCard: React.FC<Experience> = (experience) => {
       }}
       contentArrowStyle={{ borderRight: "7px solid rgba(42, 42, 42, 0.8)" }}
       date={experience.date}
-      iconStyle={{ background: experience.iconBg }}
+      iconStyle={{ background: "transparent", overflow: "hidden" }}
       icon={
-        <div className="flex h-full w-full items-center justify-center rounded-full">
+        <div className="flex h-full w-full items-center justify-center rounded-full overflow-hidden">
           <img
             src={experience.icon}
             alt={experience.companyName}
-            className="h-[60%] w-[60%] object-contain rounded-full"
+            className="h-full w-full object-cover"
           />
         </div>
       }
     >
       <div>
         <h3 className="text-xl sm:text-2xl font-bold text-white mb-1">{experience.title}</h3>
-        <p
-          className="text-primary text-base sm:text-lg font-semibold"
-          style={{ margin: 0 }}
-        >
-          {experience.companyName}
-        </p>
+        {experience.website ? (
+          <a
+            href={experience.website}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary text-base sm:text-lg font-semibold inline-flex items-center gap-2 hover:text-primary/80 transition-colors group"
+            style={{ margin: 0 }}
+          >
+            {experience.companyName}
+            <svg className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+            </svg>
+          </a>
+        ) : (
+          <p
+            className="text-primary text-base sm:text-lg font-semibold"
+            style={{ margin: 0 }}
+          >
+            {experience.companyName}
+          </p>
+        )}
         {experience.location && (
           <p className="text-muted-foreground text-sm mt-1 flex items-center gap-1">
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">

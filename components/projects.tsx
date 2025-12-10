@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState } from "react"
+import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -38,21 +39,21 @@ const Projects = () => {
   const projects: Project[] = [
     {
       id: 1,
-      title: "Vigilant X – AI-Powered Crypto Due Diligence",
-      shortDescription: "Advanced AI platform for crypto risk assessment and automated due diligence",
-      fullDescription: "Vigilant X is an advanced AI-powered due diligence platform designed for the next generation of crypto investors, auditors, analysts, and compliance teams. Built to redefine trust, intelligence, and speed in crypto risk assessment, Vigilant X automates and enhances due diligence processes in an era where misinformation and fragmented data pose critical challenges.",
+      title: "Vigilant X – AI-Powered Crypto Fund Due Diligence",
+      shortDescription: "Automated crypto fund due diligence platform preventing fraud with AI-driven analysis and forecasting",
+      fullDescription: "Vigilant X addresses the critical need for transparent crypto fund oversight exposed by the FTX collapse (2022), where poor due diligence led to billions in investor losses. The platform automates comprehensive fund analysis by scanning PDFs, researching across the internet, conducting KYC/AML checks, and generating professional PPTX reports. It combines AI-powered fraud detection with advanced Monte Carlo simulations for crypto forecasting, while incorporating human-in-the-loop validation for audit-grade reliability. Built for investors, analysts, and compliance teams struggling with slow, costly, and error-prone traditional due diligence that fails to prevent fraud in real-time.",
       image: "/images/project-1.png",
-      tech: ["Python", "LLMs", "RAG", "FastAPI", "React", "PostgreSQL"],
+      tech: ["Python", "LLMs", "RAG", "FastAPI", "React", "PostgreSQL", "Monte Carlo", "NLP"],
       highlights: [
-        "Automated document analysis – extract, clean, and process files in seconds",
-        "Context-aware Q&A – audit-grade answers to professional questions",
-        "Red flag detection – identify hidden compliance risks and missing disclosures",
-        "Multi-dimensional risk scoring – assess legal, financial, and governance risks",
-        "One-click investor-ready PPTX reporting",
-        "Real-time web & SEC data enrichment",
-        "AI + human validation for reliable outputs",
-        "60-day crypto market forecasting (50+ major tokens)",
-        "Efficient frontier portfolio builder & buy/sell strategy recommender"
+        "Automated PDF scanning & multi-source internet research for comprehensive fund analysis",
+        "AI-powered KYC/AML compliance checks with red flag detection",
+        "Professional PPTX report generation with investor-ready insights",
+        "Monte Carlo simulation for crypto forecasting using advanced quantitative methods",
+        "Human-in-the-loop validation ensuring audit-grade accuracy",
+        "Context-aware Q&A delivering professional answers to complex queries",
+        "Real-time fraud detection preventing FTX-like collapses",
+        "Multi-dimensional risk scoring across legal, financial, and governance domains",
+        "60-day market forecasting for 50+ major cryptocurrencies"
       ],
       achievements: [
         "Selected as Best Project in the Data Science Department at Esprit University",
@@ -421,10 +422,17 @@ const Projects = () => {
           <div ref={scrollContainerRef} className="pb-6">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 lg:gap-8">
               {displayedProjects.map((project, index) => (
-                <div
+                <motion.div
                   key={project.id}
-                  className="project-card rounded-2xl overflow-hidden group hover:scale-105 hover:glow-box transition-all duration-500 cursor-pointer border border-border/50 bg-card/50 backdrop-blur-sm animate-fade-in-up"
-                  style={{ animationDelay: `${(index % INITIAL_DISPLAY_COUNT) * 0.1}s` }}
+                  initial={{ opacity: 0, y: 50 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, amount: 0.15 }}
+                  transition={{
+                    type: "spring",
+                    delay: index * 0.1,
+                    duration: 0.6,
+                  }}
+                  className="project-card rounded-2xl overflow-hidden group hover:scale-105 hover:glow-box transition-all duration-500 cursor-pointer border border-border/50 bg-card/50 backdrop-blur-sm"
                   onClick={() => openProjectModal(project)}
                 >
                   <div className="relative h-48 overflow-hidden">
@@ -483,7 +491,7 @@ const Projects = () => {
                       </svg>
                     </Button>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </div>
@@ -492,7 +500,13 @@ const Projects = () => {
           {hasMoreProjects && (
             <div className="flex justify-center mt-10">
               <Button
-                onClick={() => setShowAll(!showAll)}
+                onClick={() => {
+                  if (showAll) {
+                    // Scroll to section top when collapsing
+                    sectionRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                  }
+                  setShowAll(!showAll)
+                }}
                 variant="outline"
                 size="lg"
                 className="group px-8 py-6 text-lg font-semibold border-primary/30 hover:border-primary hover:bg-primary/10 hover:text-primary transition-all duration-300 glow-box"

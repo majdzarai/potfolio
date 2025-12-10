@@ -20,18 +20,32 @@ interface Recognition {
   organization: string
   type: string
   images?: string[]
+  rank?: string
+  medals?: string[]
+  achievements?: {
+    title: string
+    description: string
+  }[]
+  competitions?: {
+    name: string
+    rank: string
+    award: string
+    link: string
+  }[]
 }
 
 const recognitions: Recognition[] = [
   {
     title: "2nd Place – IndabaX Tunisia 2025 Hackathon",
-    description: "Anomaly Detection challenge among 69 teams, 10,500 TND prize",
+    description: "Secured 2nd place out of 69 competing teams at IndabaX Tunisia 2025 hosted by SUP'COM. Developed advanced anomaly detection system using machine learning pipelines including Isolation Forest, Autoencoders, and statistical methods. Awarded 10,500 TND prize for outstanding performance in identifying rare events and outliers in high-dimensional data.",
     year: "2025",
     icon: "/images/anomaly.jpg",
     iconBg: "#8b5cf6",
     project: "Anomaly Detection System",
-    organization: "IndabaX Tunisia",
+    organization: "IndabaX Tunisia (SUP'COM)",
     type: "Hackathon",
+    rank: "2 / 69 Teams",
+    medals: ["Silver"],
     images: [
       "/images/first.jpg",
       "/images/zindi.jpg",
@@ -46,20 +60,19 @@ const recognitions: Recognition[] = [
       "/images/hak5.jpg",
       "/images/hak6.jpg",
       "https://drive.google.com/file/d/1dmqw75v9x9hFLwIj7IP9GdQ8zrIma_KY/view?usp=drive_link",
-
-
-
     ],
   },
   {
     title: "Best Project of the Year – ESPRIT University 2025",
-    description: "Selected from 200+ competing projects for Vigilant X platform",
+    description: "Selected from over 200 competing projects for Vigilant X, a crypto fund due diligence platform addressing post-FTX fraud prevention. The platform automates fund analysis through PDF scanning, internet research, KYC/AML checks, and professional PPTX report generation. Uses Monte Carlo simulations for crypto forecasting with human-in-the-loop validation for audit-grade reliability.",
     year: "2025",
-    icon: "/images/yottanest.png",
+    icon: "/images/esprit.png",
     iconBg: "#3b82f6",
     project: "Vigilant X",
     organization: "ESPRIT University",
     type: "Award",
+    rank: "Best of 200+ Projects",
+    medals: ["Gold"],
     images: [
       "/images/ball.jpg",
       "/images/ball1.jpg",
@@ -68,15 +81,13 @@ const recognitions: Recognition[] = [
       "https://drive.google.com/file/d/1M1MiKWeGgK9iB-ulOG-DhSPkM-5H-LQe/view?usp=drive_link",
       "https://drive.google.com/file/d/1iA1j5IrXtp6UD2fUBOvbvUOLRwuxlq23/view?usp=drive_link",
       "/images/value8.jpg",
-
-
     ],
   },
   {
-    title: "Chosen Top Project for Value Incubator",
-    description: "Selected as the top project by Value Incubator for innovation, technical rigor, and impact",
+    title: "Top Project Selection – Value Incubator",
+    description: "Recognized by Value Incubator for Vigilant X, a crypto fund due diligence platform preventing FTX-like fraud. Automates comprehensive fund analysis through PDF scanning, internet research, and KYC/AML compliance. Generates professional PPTX reports and uses Monte Carlo simulations for forecasting. Reduces manual processing time by 90% while handling 10,000+ daily queries.",
     year: "2025",
-    icon: "/images/yottanest.png",
+    icon: "/images/value.png",
     iconBg: "#06b6d4",
     project: "Vigilant X",
     organization: "Value Incubator",
@@ -90,10 +101,40 @@ const recognitions: Recognition[] = [
       "/images/value7.jpg",
       "/images/value12.jpg",
       "/images/vl.jpg",
-
-
     ],
   },
+
+  {
+    title: "Zindi Global Leaderboard Recognition",
+    description: "Ranked #2028 worldwide on Zindi's global leaderboard as a Leading AI Practitioner. Achieved Gold medal (2/69) in IndabaX Tunisia 2025 Challenge 1 and Bronze medal (102/265, Top 30 Worldwide) in Landslide Detection Challenge, demonstrating competitive skill in machine learning and real-world problem solving.",
+    year: "2025",
+    icon: "/images/zn.png",
+    iconBg: "#f97316",
+    project: "Zindi Competitions",
+    organization: "Zindi Africa",
+    type: "Competition",
+    rank: "#2028 Global Rank",
+    medals: ["Gold", "Bronze"],
+    competitions: [
+      {
+        name: "IndabaX Tunisia 2025: Challenge 1",
+        rank: "2 / 69",
+        award: "Gold Medal",
+        link: "https://zindi.africa/competitions/indabax-tunisia-2025-challenge-1",
+      },
+      {
+        name: "Classification for Landslide Detection",
+        rank: "102 / 265 (Top 30 Worldwide)",
+        award: "Bronze Medal",
+        link: "https://zindi.africa/competitions/classification-for-landslide-detection",
+      },
+    ],
+    images: [
+      "/images/zindi1.png",
+      "/images/zindi2.png",
+    ],
+  }
+
 ]
 
 // Helper function to check if media is a video
@@ -118,6 +159,10 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
   organization,
   type,
   images = [],
+  rank,
+  medals,
+  achievements,
+  competitions,
 }) => {
   const [isOpen, setIsOpen] = useState(false)
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
@@ -182,7 +227,7 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
           }}
           className="absolute -top-4 -right-4 w-24 h-24 sm:w-28 sm:h-28 lg:w-32 lg:h-32 rounded-full overflow-hidden border-4 border-background shadow-2xl group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 z-10"
           style={{
-            boxShadow: `0 8px 32px ${iconBg}60`,
+            boxShadow: `0 8px 40px ${iconBg}B0, 0 4px 20px ${iconBg}80, 0 12px 60px ${iconBg}60`,
           }}
         >
           <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-transparent" />
@@ -240,6 +285,101 @@ const RecognitionCard: React.FC<{ index: number } & Recognition> = ({
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
               </svg>
               <span className="text-xs sm:text-sm font-medium text-secondary">{project}</span>
+            </div>
+          )}
+
+          {/* Medals (if exists) */}
+          {medals && medals.length > 0 && (
+            <div className="flex flex-wrap gap-2 mb-4">
+              {medals.map((medal, idx) => (
+                <div
+                  key={idx}
+                  className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg font-semibold text-xs ${medal === "Gold"
+                    ? "bg-yellow-500/20 text-yellow-500 border border-yellow-500/30"
+                    : medal === "Silver"
+                      ? "bg-gray-400/20 text-gray-300 border border-gray-400/30"
+                      : "bg-orange-600/20 text-orange-500 border border-orange-600/30"
+                    }`}
+                >
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+                  </svg>
+                  {medal} Medal
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Global Rank (if exists) */}
+          {rank && (
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-primary/10 border border-primary/20 mb-4">
+              <svg className="w-4 h-4 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
+              </svg>
+              <span className="text-xs sm:text-sm font-semibold text-primary">{rank}</span>
+            </div>
+          )}
+
+          {/* Competitions (if exists) */}
+          {competitions && competitions.length > 0 && (
+            <div className="space-y-2 mb-4">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Competitions:</p>
+              {competitions.map((comp, idx) => (
+                <a
+                  key={idx}
+                  href={comp.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block p-3 rounded-lg bg-card/50 border border-border/30 hover:border-primary/50 hover:bg-card/80 transition-all group"
+                >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-foreground group-hover:text-primary transition-colors">
+                        {comp.name}
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-1">Rank: {comp.rank}</p>
+                    </div>
+                    <div className="flex items-center gap-1.5">
+                      <span className={`text-xs font-bold ${comp.award.includes("Gold") ? "text-yellow-500" :
+                        comp.award.includes("Silver") ? "text-gray-300" :
+                          "text-orange-500"
+                        }`}>
+                        {comp.award}
+                      </span>
+                      <svg className="w-4 h-4 text-primary/50 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                      </svg>
+                    </div>
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+
+          {/* Achievements (if exists) */}
+          {achievements && achievements.length > 0 && (
+            <div className="space-y-2 mb-4">
+              <p className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Key Achievements:</p>
+              {achievements.map((achievement, idx) => (
+                <div
+                  key={idx}
+                  className="p-3 rounded-lg bg-card/30 border border-border/20"
+                >
+                  <div className="flex items-start gap-2">
+                    <svg className="w-4 h-4 text-primary flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <div className="flex-1">
+                      <p className="text-sm font-semibold text-foreground mb-1">
+                        {achievement.title}
+                      </p>
+                      <p className="text-xs text-muted-foreground leading-relaxed">
+                        {achievement.description}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
 

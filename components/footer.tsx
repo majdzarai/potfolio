@@ -41,7 +41,7 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4 text-primary">Quick Links</h4>
             <nav className="space-y-2">
-              {["hero", "about", "projects", "contact"].map((section) => (
+              {["hero", "about", "projects", "recognition", "experience", "certifications", "contact"].map((section) => (
                 <button
                   key={section}
                   onClick={() => scrollToSection(section)}
